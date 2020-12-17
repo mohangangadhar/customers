@@ -21,7 +21,8 @@ exports.putItemHandler = async (event) => {
     console.log('received:', JSON.stringify(event));
 
     // Get id and name from the body of the request
-    const { id, name } = JSON.parse(body);
+    const id = uuidv4();
+    const { name } = JSON.parse(body);
 
     // Creates a new item, or replaces an old item with a new item
     // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property
@@ -39,3 +40,10 @@ exports.putItemHandler = async (event) => {
     console.log(`response from: ${path} statusCode: ${response.statusCode} body: ${response.body}`);
     return response;
 };
+
+function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
